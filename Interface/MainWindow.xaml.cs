@@ -30,7 +30,7 @@ namespace Interface
             Program.FormHotel();
             //Program.ExcelWriter();
             //SqlExecuter.Clear();
-            //Program.Main();
+            Program.Main();
 
             //for (int i = 0; i < 10; i++)
             //    grid.ColumnDefinitions.Add(new ColumnDefinition { });
@@ -46,6 +46,11 @@ namespace Interface
             //dt.Columns.Add(column);
 
             //dataGrid.ItemsSource = SqlExecuter.Select("Hotel").DefaultView;
+        }
+
+        public void Show()
+        {
+            throw new NotImplementedException();
         }
 
         private void Reload()

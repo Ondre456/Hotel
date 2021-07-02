@@ -86,6 +86,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CustomerGenerator\CustomerGenerator.csproj">
+      <Project>{65b07d27-788a-405d-9a41-bcbe7899aafe}</Project>
+      <Name>CustomerGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{a97a8fa1-6723-49ef-a022-1e2d8f3f2657}</Project>
       <Name>Domain</Name>

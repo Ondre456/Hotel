@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CustomersGenerator;
 using Domain;
 using Microsoft.Office.Interop.Excel;
+
 namespace App
 {
     public class Program
@@ -18,7 +20,17 @@ namespace App
             Hotel.TakeClients(new Customer(typeof(Vip), DateTime.Now.Date, 4));
         }
 
-        public static void Main() 
+        static void Main() 
+        {
+            FormHotel();
+            ExcelWriter();
+            Console.ReadKey();
+            var cg = new CustomerGenerator();
+            Hotel.TakeClients(cg.Generate());
+            ExcelWriter();
+        }
+
+        public static void ExcelWriter()
         {
             Object missing = Type.Missing;
             Application ExcelApp = new Application();
@@ -38,52 +50,12 @@ namespace App
                 ExcelWorkSheet.Cells[i + 2, 1] = room.Number + " " + room.GetType().Name;
                 for (int j = 0; j < 62; j++)
                     if (room.OcupDays.Contains(DateTime.Now.Date.AddDays(j)))
+                    {
                         ExcelWorkSheet.Cells[i + 2, j + 2] = "Занято";
+                    }
             }
             ExcelApp.Visible = true;
             ExcelApp.UserControl = true;
-            //var sb = new StringBuilder();
-            //sb.Append("Номера nvarchar(50), ");
-
-            //for (var i = 0; i < 62; i++)
-            //{
-            //    sb.Append("\"" + DateTime.Now.Date.AddDays(i).ToString() + "\" nvarchar(50),");
-            //}
-
-            //SqlExecuter.Execute("CREATE TABLE Hotel (" + sb.ToString() + " PRIMARY KEY (Номера))");
-
-            //foreach (var room in Hotel.Rooms.OrderBy(x => x.Number))
-            //{
-            //    SqlExecuter.Execute("INSERT INTO Hotel (Номера) VALUES ('" + room.Number + " " + room.GetType().Name + "')");
-            //    foreach (var day in room.OcupDays)
-            //        SqlExecuter.Execute("UPDATE Hotel SET \"" + day.ToString() + "\" = 'Занято' WHERE 'Номера' = '" + room.Number +" "+ room.GetType().Name+"'") ;
-            //}
         }
-
-        //public static void ExcelWriter()
-        //{
-        //    Object missing = Type.Missing;
-        //    Application ExcelApp = new Application();
-        //    Workbook ExcelWorkBook;
-        //    Worksheet ExcelWorkSheet;
-        //    //Книга.
-        //    ExcelWorkBook = ExcelApp.Workbooks.Add(System.Reflection.Missing.Value);
-        //    //Таблица.
-
-        //    ExcelWorkSheet = (Worksheet)ExcelWorkBook.Worksheets.get_Item(1);
-        //    ExcelWorkSheet.Cells[1, 1] = "Номера";
-        //    for (var i = 0; i < 62; i++)
-        //        ExcelWorkSheet.Cells[1, i + 2] = DateTime.Now.Date.AddDays(i);
-        //    for (int i = 0; i < Hotel.Rooms.Count; i++)
-        //    {
-        //        var room = Hotel.Rooms[i];
-        //        ExcelWorkSheet.Cells[i + 2, 1] = room.Number + " " + room.GetType().Name;
-        //        for (int j = 0; j < 62; j++)
-        //            if (room.OcupDays.Contains(DateTime.Now.Date.AddDays(j)))
-        //                ExcelWorkSheet.Cells[i + 2, j + 2] = "Занято";
-        //    }
-        //    ExcelApp.Visible = true;
-        //    ExcelApp.UserControl = true;
-        //}
     }
 }

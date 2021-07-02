@@ -34,9 +34,12 @@ namespace Domain
                     .Select(x => Tuple.Create(x, x.CanTakeClient(contract).Item2,x.CanTakeClient(contract).Item3))
                     .OrderBy(x => x.Item3)
                     .ToList();
-                contract.CheckInDate = list[0].Item2;
-                if (list.Count != 0)
-                    list[0].Item1.TakeClient(contract);
+                if (list.Count > 0)
+                {
+                    contract.CheckInDate = list[0].Item2;
+                    if (list.Count != 0)
+                        list[0].Item1.TakeClient(contract);
+                }
             }
         }
     }
